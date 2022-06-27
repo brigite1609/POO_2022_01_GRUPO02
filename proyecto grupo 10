@@ -1,3 +1,4 @@
+PRINCIPAL
 #include <iostream>
 #include <string>
 #include "productosVector.h"
@@ -455,5 +456,452 @@ void cierre ()
 	system ("cls");
 	ingreso ();
 }
+
+empleados.h
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+class Empleados
+{
+  //declaración de variables
+  	private:
+  		int codigo;
+	  	string contrasena;
+	public:
+	  	Empleados(int cod,string contra)
+		{
+	  		codigo=cod;
+	  		contrasena=contra;
+	  	}
+	  	Empleados()
+	  	{
+	  	
+	  	}
+	  
+	  // Set 
+	    void setCodigo(int valor)
+		{
+	    	codigo = valor;
+		}
+	    void setContrasena(string valor)
+		{
+	    	contrasena = valor;
+		}
+	  // Get
+	    int getCodigos()
+		{
+			return codigo;
+		}
+	    string getcontrasena()
+		{ 
+			return contrasena;
+		}
+	  // Funciones
+	    
+	
+	};
+
+clientes.h
+#include <string>
+using namespace std;
+class Clientes
+{
+	private:
+		string 	nombre;
+		string	apellido;
+		string 	direccion;
+		string 	distrito;
+		int 	telefono;
+		string 	correo;
+	public:
+		
+		// Constructor
+		Clientes (string nom, string ape, string direc, string dis, int tel, string cor)
+		{
+			nombre 		= nom;
+			apellido 	= ape;
+			direccion 	= direc;
+			distrito  	= dis;
+			telefono 	= tel;
+			correo 		= cor;
+		}
+		Clientes ()
+		{
+			
+		}
+		
+		// Set
+		void setNombre (string valor)
+		{
+			nombre = valor;
+		}
+		void setApellido (string valor)
+		{
+			apellido = valor;
+		}
+		void setDireccion (string valor)
+		{
+			direccion = valor;
+		}
+		void setDistrito (string valor)
+		{
+			distrito = valor;
+		}
+		void setTelefono (int valor)
+		{
+			telefono = valor;
+		}
+		void setCorreo (string valor)
+		{
+			correo = valor;
+		}
+		
+		// Get 
+		string getNombre ()
+		{
+			return nombre;
+		}
+		string getApellido ()
+		{
+			return apellido;
+		}
+		string getDireccion ()
+		{
+			return direccion;
+		}
+		string getDistrito ()
+		{
+			return distrito;
+		}
+		int getFono ()
+		{
+			return telefono;
+		}
+		string getCorreo ()
+		{
+			return correo;
+		}
+};
+
+boleta.h
+#include"clientes.h"
+class Boleta: public Clientes
+{
+	private:
+		int dd, mm, aa;
+		int codigo;
+	public: 
+		Boleta (string nom, string ape, string direc, string dis, int tel, string cor, int dd, int mm, int aa, int codigo): 
+		Clientes (nom, ape, direc, dis, tel, cor)
+		{
+			this -> dd 		= dd;
+			this -> mm 		= mm;
+			this -> aa 		= aa;
+			this -> codigo 	= codigo;
+		}
+		Boleta ()
+		{
+			
+		}
+		
+		void setDd (int valor)
+		{
+			dd = valor;
+		}
+		void setMm (int valor)
+		{
+			mm = valor;
+		}
+		void setAa (int valor)
+		{
+			aa = valor;
+		}
+		void setCodigo (int valor)
+		{
+			codigo = valor;
+		}
+		int getDd ()
+		{
+			return dd;
+		}
+		int getMm ()
+		{
+			return mm;
+		}
+		int getAa ()
+		{
+			return aa;
+		}
+		int getCodigo ()
+		{
+			return codigo;
+		}
+};
+
+
+productos.h
+#include <string>
+#include <iostream>
+using namespace std;
+class Productos 
+{
+	private:
+		int codigo;
+		string producto;	
+		float  precio;	  
+		int cantidad; 
+	public:
+		Productos (int codigo, string product, float precio, int cantidad)
+		{
+			producto 			= product;
+			this -> precio 		= precio;
+			this -> codigo 		= codigo;
+			this -> cantidad 	= cantidad;
+		}
+		Productos ()
+		{
+			
+		}
+		
+		// Set
+		void setCodigo (int valor)
+		{
+			codigo = valor;
+		}
+		void setProducto (string valor)
+		{
+			producto = valor;
+		}
+		void setPrecio (int valor)
+		{
+			precio = valor;
+		}
+		void setCantidad (int valor)
+		{
+			cantidad = valor;
+		}
+		// Get 
+		string getProducto ()
+		{
+			return producto;	
+		}			
+		int getPrecio ()
+		{
+			return precio;
+		}
+		int getCodigo ()
+		{
+			return codigo;
+		}
+		int getCantidad ()
+		{
+			return cantidad;
+		}
+		float precioTotal ()
+		{
+				return getCantidad () * getPrecio ();
+		}
+};
+
+
+productosVector.h
+#include<vector>
+#include"productos.h"
+#include<iostream>
+#include<string>
+#include<fstream>
+using namespace std;
+class ProductosVector 
+{
+	private: 
+		vector <Productos> vectorProductos;
+	public: 
+		ProductosVector ()
+		{
+			vector <Productos> vectorProductos;
+		}
+		void add (Productos obj)
+		{
+			vectorProductos.push_back(obj);
+		}
+		Productos get(int pos)
+		{
+			return vectorProductos[pos];
+		}
+		int rows ()
+		{
+			return vectorProductos.size();
+		}
+		Productos buscarPorCodigo (int codigo)
+		{
+			Productos objError;
+			objError.setProducto("Error");
+			for (Productos x:vectorProductos)
+			{
+				if (codigo == x.getCodigo())
+				{
+					return x;
+				}
+			}
+			return vectorProductos[-1];
+		}
+		int getPostArray (Productos obj)
+		{
+			for (int i = 0; i <= rows (); i++)
+			{
+				if (obj.getCodigo () == get(i).getCodigo())
+				{
+					return i;
+				}
+			}
+			return -1;
+		}
+		// Borrar elemento del vector
+		void remove (Productos obj)
+		{
+			vectorProductos.erase(vectorProductos.begin() + getPostArray (obj));
+		}
+		bool modificar (Productos obj, string nom, int cantidad)
+		{
+			for (int i = 0; i <= rows (); i++)
+			{
+				if (obj.getCodigo () == get(i).getCodigo())
+				{
+					get(i).setProducto (nom);
+					get(i).setCantidad (cantidad);
+					return true;
+				}
+			}
+			return false;
+		}
+		void grabarEnArchivo(Productos product)
+		{
+			try
+			{
+				fstream archivoProducto;
+				archivoProducto.open("Productos_Vendidos_Del_Día.csv",ios::app);
+				if(archivoProducto.is_open())
+				{
+					archivoProducto<<product.getCodigo()<<";"<<product.getProducto()<<";"<<product.getPrecio()<<";"<<product.getCantidad()<<";"<<"\n";
+					archivoProducto.close();
+				}
+			}			
+			catch(exception e)
+			{
+				cout<<"Ocurrio un error al grabar el registro!!!";
+			}
+		}
+		void grabarModificarEliminarArchivo()
+		{
+			try
+			{
+				fstream archivoProducto;
+				archivoProducto.open("Productos_Vendidos_Del_Día.csv", ios::out);
+				if (archivoProducto.is_open())
+				{
+					for (Productos x : vectorProductos)
+					{
+					archivoProducto << x.getCodigo() << ";" << x.getProducto () << ";" << x.getPrecio () << ";" << x.getCantidad () << ";" << "\n";
+					}
+					archivoProducto.close();
+				}
+			}
+			catch (exception e)
+			{
+				cout << "Ocurrio un error al grabar en el archivo";
+			}
+		}
+	void cargarDatosDelArchivoAlVector()
+	{
+		try
+		{
+			int i;
+			size_t posi;//Cantidad maxima
+			string linea;
+			string temporal[4];//Cantidad de columnas
+			fstream archivoProducto;
+			archivoProducto.open("Productos_Vendidos_Del_Día.csv.csv", ios::in);
+			if (archivoProducto.is_open())
+			{
+				while (!archivoProducto.eof()) 
+				{
+					while (getline(archivoProducto, linea))
+					{
+						i = 0;
+						while ((posi = linea.find(";")) != string::npos) 
+						{
+							temporal[i] = linea.substr(0, posi);
+							linea.erase(0, posi + 1);
+							i++;
+						}
+						//Asignando los valores al vector
+						Productos product;
+						product.setCodigo(std::stoi(temporal[0]));
+						product.setProducto(temporal[1]);
+						product.setPrecio(std::stoi(temporal[2]));
+						product.setCantidad(std::stoi(temporal[3]));
+						add(product);
+					}
+				}
+			}
+			archivoProducto.close();
+		}
+		catch (exception e)
+		{
+			cout << "Ocurrio un error al leer el archivo";
+		}
+	}
+	
+	};
+vectorBoleta.h
+#include <vector>
+#include "boleta.h"
+class BoletaVector
+{
+	private: 
+		vector <Boleta> vectorBoleta;
+	public: 
+		BoletaVector ()
+		{
+			vector <Boleta> vectorBoleta;
+		}
+		void add (Boleta obj)
+		{
+			vectorBoleta.push_back(obj);
+		}
+		Boleta get(int pos)
+		{
+			return vectorBoleta[pos];
+		}
+		int rows ()
+		{
+			return vectorBoleta.size();
+		}
+		int getCorrelativo()
+		{
+			if(rows () == 0)
+			{
+				return 1;
+			}
+			else
+			{
+				return vectorBoleta[rows() - 1].getCodigo() + 1;
+			}
+		}
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
